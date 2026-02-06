@@ -4,11 +4,11 @@
 
 Before running the application, ensure you have:
 
-- ✅ Python 3.11+ installed
-- ✅ Node.js 22+ installed (run `node --version`)
+- ✅ Python 3.10+ installed (run `python --version`)
+- ✅ Node.js 18+ installed (run `node --version`)
 - ✅ UV package manager installed
 - ✅ AWS account with Bedrock access
-- ✅ Claude Sonnet 4.5 model enabled in your AWS region
+- ✅ Claude Sonnet 4.5 model enabled in your AWS region (us-east-1 recommended)
 
 ## Step 1: Configure AWS Credentials
 
@@ -89,7 +89,7 @@ PORT=8001
 
 **Problem**: Node.js version error
 ```bash
-nvm use 22  # Switch to Node.js 22
+nvm use 18  # Switch to Node.js 18 or higher
 ```
 
 ## Configuration

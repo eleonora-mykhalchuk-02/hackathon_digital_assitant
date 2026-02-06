@@ -21,7 +21,7 @@ A proof-of-concept application demonstrating how an "LLM Judge" can work alongsi
 
 ### Prerequisites
 
-- Python 3.11+
+- Python 3.10+
 - Node.js 18+
 - UV package manager
 - AWS account with Bedrock access
@@ -118,14 +118,6 @@ See `docs/planning/` for detailed documentation:
 │   └── src/        # Source code
 └── docs/           # Documentation
     └── planning/   # Planning documents
-```
-
-### Testing
-
-Run the backend tests:
-```bash
-cd backend
-uv run pytest
 ```
 
 ## License

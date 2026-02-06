@@ -1,73 +1,133 @@
-# React + TypeScript + Vite
+# LLM Judge + Chatbot Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + TypeScript frontend for the LLM Judge + Chatbot application.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Real-time chat interface with WebSocket support
+- Live evaluation display with traffic light indicators (🟢/🟠/🔴)
+- Streaming responses with typing indicators
+- Inline criterion feedback and explanations
+- Retry functionality for responses
+- Stop generation control
 
-## React Compiler
+## Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
+- Node.js 18+
+- npm
 
-## Expanding the ESLint configuration
+### Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Install dependencies:
+```bash
+cd frontend
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. Configure environment variables:
+```bash
+# Create .env file (or use existing)
+VITE_API_URL=http://localhost:8000
+VITE_WS_URL=ws://localhost:8000
 ```
+
+### Running the Development Server
+
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:5173`
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+## Project Structure
+
+```
+frontend/
+├── src/
+│   ├── components/         # React components
+│   │   ├── ChatUI.tsx     # Main chat interface
+│   │   ├── Message.tsx    # Individual message display
+│   │   ├── JudgePanel.tsx # Judge evaluation panel
+│   │   └── TrafficLight.tsx # Traffic light indicator
+│   ├── services/          # API and WebSocket clients
+│   │   ├── api.ts        # REST API client
+│   │   └── websocket.ts  # WebSocket client
+│   ├── types/            # TypeScript type definitions
+│   │   └── index.ts
+│   ├── App.tsx           # Root component
+│   └── main.tsx          # Entry point
+├── public/               # Static assets
+└── package.json          # Dependencies
+```
+
+## Technology Stack
+
+- **React 19** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **WebSocket** - Real-time communication
+
+## Available Scripts
+
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint
+
+## Features Explained
+
+### Traffic Light System
+
+- 🟢 **Green** (70-100): Good quality, meets standards
+- 🟠 **Orange** (40-69): Needs improvement
+- 🔴 **Red** (0-39): Poor quality, fails to meet standards
+
+### Real-time Updates
+
+The frontend receives the following WebSocket events:
+
+- `chatbot_generating` - Chatbot starts generating response
+- `chatbot_chunk` - Streaming response chunks
+- `chatbot_response` - Complete response received
+- `judge_evaluating` - Judge starts evaluation
+- `judge_criterion_result` - Individual criterion score (streaming)
+- `judge_result` - Final evaluation complete
+- `user_input_evaluation` - User input quality assessment
+- `error` - Error occurred
+
+### Message Flow
+
+1. User sends message
+2. Input evaluation (neutraliteit, impact, context, privacy, duidelijkheid)
+3. Chatbot generates response with streaming
+4. Judge evaluates response (bias, impact, complexiteit, volledigheid, relevantie, bruikbaarheid)
+5. Traffic lights display inline with messages
+6. If quality insufficient, automatic refinement (up to 2 iterations)
+
+## Configuration
+
+Edit `.env` to change backend URLs:
+- `VITE_API_URL` - REST API endpoint
+- `VITE_WS_URL` - WebSocket endpoint
+
+## Development Notes
+
+- Hot Module Replacement (HMR) enabled for fast development
+- TypeScript strict mode enabled
+- ESLint configured for code quality
+- Component-scoped styling with inline styles
+
+## Browser Support
+
+Modern browsers with WebSocket support:
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+

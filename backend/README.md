@@ -5,18 +5,12 @@ Python backend using FastAPI for the LLM Judge + Chatbot application.
 ## Setup
 
 ### Prerequisites
-- Python 3.11+
+- Python 3.10+
 - UV package manager
 
 ### Installation
 
-1. Initialize the project with UV:
-```bash
-cd backend
-uv init
-```
-
-2. Install dependencies:
+1. Install dependencies:
 ```bash
 uv sync
 ```
