@@ -1,0 +1,16 @@
+[project]
+name = "llm-judge-backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "boto3>=1.42.42",
+    "fastapi>=0.128.1",
+    "pydantic>=2.12.5",
+    "pydantic-settings>=2.12.0",
+    "python-dotenv>=1.2.1",
+    "pyyaml>=6.0.3",
+    "uvicorn>=0.40.0",
+    "websockets>=16.0",
+]

@@ -1,0 +1,154 @@
+# Judge Criteria Configuration
+# Configure how the LLM Judge evaluates chatbot responses and user inputs
+
+profiles:
+  strict:
+    overall_threshold: 80
+    description: "High quality standards, rejects responses below 80/100"
+
+  moderate:
+    overall_threshold: 60
+    description: "Balanced quality standards, rejects responses below 60/100"
+
+  lenient:
+    overall_threshold: 40
+    description: "Lenient quality standards, rejects responses below 40/100"
+
+# Criteria for evaluating user input (questions)
+input_criteria:
+  - name: neutraliteit
+    description: "Vraag is neutraal geformuleerd zonder vooringenomenheid"
+    weight: 0.20
+    enabled: true
+    threshold: 60
+    evaluation_prompt: "Is de vraag neutraal gesteld zonder bias of vooroordelen?"
+
+  - name: impact
+    description: "Vraag heeft duidelijke relevantie en potentiële impact"
+    weight: 0.20
+    enabled: true
+    threshold: 60
+    evaluation_prompt: "Heeft de vraag duidelijke relevantie en potentiële impact voor de gebruiker?"
+
+  - name: context
+    description: "Vraag bevat voldoende context om goed te kunnen beantwoorden"
+    weight: 0.25
+    enabled: true
+    threshold: 70
+    evaluation_prompt: "Bevat de vraag voldoende context en achtergrondinformatie?"
+
+  - name: privacy en veiligheid
+    description: "Vraag respecteert privacy en bevat geen gevoelige informatie"
+    weight: 0.15
+    enabled: true
+    threshold: 80
+    evaluation_prompt: "Respecteert de vraag privacy en bevat geen ongepaste gevoelige informatie?"
+
+  - name: duidelijkheid
+    description: "Vraag is helder en begrijpelijk geformuleerd"
+    weight: 0.20
+    enabled: true
+    threshold: 70
+    evaluation_prompt: "Is de vraag helder, specifiek en goed begrijpelijk?"
+
+# Criteria for evaluating chatbot output (responses)
+output_criteria:
+  - name: bias
+    description: "Antwoord is objectief en vrij van vooringenomenheid"
+    weight: 0.20
+    enabled: true
+    threshold: 70
+    evaluation_prompt: "Is het antwoord objectief en vrij van bias of vooroordelen?"
+
+  - name: impact
+    description: "Antwoord heeft relevante en bruikbare impact"
+    weight: 0.15
+    enabled: true
+    threshold: 60
+    evaluation_prompt: "Heeft het antwoord relevante en concrete impact voor de gebruiker?"
+
+  - name: complexiteit
+    description: "Antwoord heeft passend niveau van complexiteit en diepgang"
+    weight: 0.15
+    enabled: true
+    threshold: 60
+    evaluation_prompt: "Is de complexiteit van het antwoord passend voor de vraag?"
+
+  - name: volledigheid
+    description: "Antwoord behandelt alle aspecten van de vraag volledig"
+    weight: 0.20
+    enabled: true
+    threshold: 70
+    evaluation_prompt: "Behandelt het antwoord alle aspecten van de vraag volledig?"
+
+  - name: relevantie
+    description: "Antwoord is direct relevant voor de gestelde vraag"
+    weight: 0.20
+    enabled: true
+    threshold: 70
+    evaluation_prompt: "Is het antwoord direct relevant en gericht op de vraag?"
+
+  - name: bruikbaarheid
+    description: "Antwoord is praktisch toepasbaar en bruikbaar"
+    weight: 0.10
+    enabled: true
+    threshold: 60
+    evaluation_prompt: "Is het antwoord praktisch toepasbaar en direct bruikbaar?"
+
+# Legacy criteria field (kept for backwards compatibility, but use input_criteria and output_criteria instead)
+criteria:
+  - name: bias
+    description: "Antwoord is objectief en vrij van vooringenomenheid"
+    weight: 0.20
+    enabled: true
+    threshold: 70
+    evaluation_prompt: "Is het antwoord objectief en vrij van bias of vooroordelen?"
+
+  - name: impact
+    description: "Antwoord heeft relevante en bruikbare impact"
+    weight: 0.15
+    enabled: true
+    threshold: 60
+    evaluation_prompt: "Heeft het antwoord relevante en concrete impact voor de gebruiker?"
+
+  - name: complexiteit
+    description: "Antwoord heeft passend niveau van complexiteit en diepgang"
+    weight: 0.15
+    enabled: true
+    threshold: 60
+    evaluation_prompt: "Is de complexiteit van het antwoord passend voor de vraag?"
+
+  - name: volledigheid
+    description: "Antwoord behandelt alle aspecten van de vraag volledig"
+    weight: 0.20
+    enabled: true
+    threshold: 70
+    evaluation_prompt: "Behandelt het antwoord alle aspecten van de vraag volledig?"
+
+  - name: relevantie
+    description: "Antwoord is direct relevant voor de gestelde vraag"
+    weight: 0.20
+    enabled: true
+    threshold: 70
+    evaluation_prompt: "Is het antwoord direct relevant en gericht op de vraag?"
+
+  - name: bruikbaarheid
+    description: "Antwoord is praktisch toepasbaar en bruikbaar"
+    weight: 0.10
+    enabled: true
+    threshold: 60
+    evaluation_prompt: "Is het antwoord praktisch toepasbaar en direct bruikbaar?"
+
+# Application settings
+settings:
+  active_profile: moderate
+  max_refinement_iterations: 2
+  enable_input_critique: true
+  enable_feedback_loop: true
+  show_iteration_history: true
+
+  # Traffic light thresholds for score visualization
+  traffic_light:
+    green_threshold: 70    # 🟢 Good (>= 70)
+    orange_threshold: 40   # 🟠 Needs improvement (40-69)
+                           # 🔴 Poor (< 40)
